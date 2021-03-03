@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import actionCreator from './actions/actionCreator'
-import {useSelector, useDispatch} from 'react-redux'
-import incrementAction from './actions/incrementAction'
 const App = () => {
-    const count = useSelector(state=>state.counterReducer)
     const dispatch = useDispatch()
+    const mystate = useSelector(state=>state.userReducer)
+    useEffect(()=>{
+        dispatch(actionCreator())
+    },[])
+    
     return (
         <div>
-            <h3>count : ${count}</h3>
-            <button onClick={()=>dispatch(actionCreator())}>+</button>
+           {
+               mystate.data.map(user=>{
+                   return(
+                       <div>
+                           <p>{user.id}. {user.name}</p>
+                           <p>{user.email}</p>
+                           <br/>
+                       </div>
+                   )
+               })
+           }
         </div>
     );
 };
